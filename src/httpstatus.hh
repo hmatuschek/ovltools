@@ -4,10 +4,8 @@
 
 class HttpStatus: public HttpRequestHandler
 {
-  Q_OBJECT
-
 public:
-  HttpStatus(Node &dht, QObject *parent=0);
+  HttpStatus(Node &dht);
 
   bool acceptReqest(HttpRequest *request);
   HttpResponse *processRequest(HttpRequest *request);

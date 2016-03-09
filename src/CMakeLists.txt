@@ -1,9 +1,9 @@
 SET(OVL_DAEMON_SOURCES main.cc echostream.cc qhal.cc sockswhitelist.cc
     application.cc halchat.cc settings.cc httpstatus.cc)
 SET(OVL_DAEMON_MOC_HEADERS
-    application.hh halchat.hh settings.hh httpstatus.hh)
+    application.hh halchat.hh settings.hh)
 SET(OVL_DAEMON_HEADERS ${OVL_DAEMON_MOC_HEADERS}
-    echostream.hh qhal.hh sockswhitelist.hh)
+    echostream.hh qhal.hh sockswhitelist.hh httpstatus.hh)
 
 qt5_wrap_cpp(OVL_DAEMON_MOC_SOURCES ${OVL_DAEMON_MOC_HEADERS})
 

@@ -1,8 +1,8 @@
 #include "httpstatus.hh"
 #include <ovlnet/node.hh>
 
-HttpStatus::HttpStatus(Node &dht, QObject *parent)
-  : HttpRequestHandler(parent), _dht(dht)
+HttpStatus::HttpStatus(Node &dht)
+  : HttpRequestHandler(), _dht(dht)
 {
   // pass...
 }
