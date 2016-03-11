@@ -42,7 +42,6 @@ protected:
   };
 
 protected:
-  Identity *_identity;
   Node *_dht;
   QHalModel _model;
   Settings _settings;

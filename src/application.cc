@@ -17,22 +17,8 @@ Application::Application(int argc, char *argv[])
   if (! ovlDir.cd("ovlnetd")) {
     ovlDir.mkdir("ovlnetd"); ovlDir.cd("ovlnetd");
   }
-  // Create identity if not present
-  QString idFile(ovlDir.canonicalPath()+"/identity.pem");
-  if (!QFile::exists(idFile)) {
-    logInfo() << "No identity found -> create one.";
-    _identity = Identity::newIdentity();
-    if (_identity) { _identity->save(idFile); }
-  } else {
-    logDebug() << "Load identity from" << idFile;
-    _identity = Identity::load(idFile);
-  }
 
-  if (_identity) {
-    _dht = new Node(*_identity);
-  } else {
-    logError() << "Error while loading or creating my identity.";
-  }
+  _dht = new Node(ovlDir.canonicalPath()+"/identity.pem");
 
   // Register services
   _dht->registerService("::simplechat", new HalChatService(*this));
