@@ -18,3 +18,9 @@ INSTALL(
   FILES "${CMAKE_SOURCE_DIR}/shared/ovldaemon.conf"
   DESTINATION "/etc/init")
 ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+
+
+SET(OVL_GENID_SOURCES genid.cc)
+add_executable(ovlgenid ${OVL_GENID_SOURCES})
+target_link_libraries(ovlgenid ${LIBS})
+INSTALL(TARGETS ovlgenid DESTINATION bin)
