@@ -14,7 +14,7 @@ class HalChat : public QObject, public SecureSocket
   Q_OBJECT
 
 public:
-  explicit HalChat(Node &dht, QHalModel &model,QObject *parent = 0);
+  explicit HalChat(Network &net, QHalModel &model,QObject *parent = 0);
 
   void started();
 

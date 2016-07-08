@@ -1,0 +1,17 @@
+SET(OVL_SOCKSSERVICE_SOURCES socksserviceplugin.cc)
+SET(OVL_SOCKSSERVICE_MOC_HEADERS socksserviceplugin.hh)
+SET(OVL_SOCKSSERVICE_HEADERS ${OVL_HALSERVICE_MOC_HEADERS}
+    )
+SET(OVL_SOCKSSERVICE_META socksservice.json)
+
+qt5_wrap_cpp(OVL_SOCKSSERVICE_MOC_SOURCES ${OVL_SOCKSSERVICE_MOC_HEADERS})
+
+add_library(ovlsocks SHARED ${OVL_SOCKSSERVICE_SOURCES} ${OVL_SOCKSSERVICE_MOC_SOURCES} ${OVL_SOCKSSERVICE_RCC_SOURCES})
+add_custom_target(ovlsocksmeta SOURCES ${OVL_SOCKSSERVICE_META})
+set_target_properties(ovlsocks PROPERTIES OUTPUTNAME "ovl-socksservice")
+set_target_properties(ovlsocks PROPERTIES MACOSX_RPATH "${OVL_PLUGIN_DIR}")
+set_target_properties(ovlsocks PROPERTIES INSTALL_NAME_DIR ${OVL_PLUGIN_DIR})
+target_link_libraries(ovlsocks ${LIBS})
+
+install(TARGETS ovlsocks DESTINATION ${OVL_PLUGIN_DIR})
+install(FILES ${OVL_SOCKSSERVICE_META} DESTINATION ${OVL_PLUGIN_DIR})

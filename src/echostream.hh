@@ -6,7 +6,7 @@
 class EchoStream : public SecureSocket
 {
 public:
-  EchoStream(Node &dht);
+  EchoStream(Network &net);
 
   void handleDatagram(const uint8_t *data, size_t len);
 };

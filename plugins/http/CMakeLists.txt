@@ -1,0 +1,20 @@
+SET(OVL_HTTPSERVICE_SOURCES 
+    httpserviceplugin.cc)
+SET(OVL_HTTPSERVICE_MOC_HEADERS
+    httpserviceplugin.hh)
+SET(OVL_HTTPSERVICE_HEADERS ${OVL_HTTPSERVICE_MOC_HEADERS})
+
+SET(OVL_HTTPSERVICE_META httpservice.json)
+
+qt5_wrap_cpp(OVL_HTTPSERVICE_MOC_SOURCES ${OVL_HTTPSERVICE_MOC_HEADERS})
+
+add_library(ovlhttp SHARED ${OVL_HTTPSERVICE_SOURCES} ${OVL_HTTPSERVICE_MOC_SOURCES} ${OVL_HTTPSERVICE_RCC_SOURCES})
+set_target_properties(ovlhttp PROPERTIES OUTPUTNAME "ovl-httpservice")
+set_target_properties(ovlhttp PROPERTIES MACOSX_RPATH "${OVL_PLUGIN_DIR}")
+set_target_properties(ovlhttp PROPERTIES INSTALL_NAME_DIR ${OVL_PLUGIN_DIR})
+target_link_libraries(ovlhttp ${LIBS})
+
+add_custom_target(ovlhttpmeta SOURCES ${OVL_HTTPSERVICE_META})
+
+install(TARGETS ovlhttp DESTINATION ${OVL_PLUGIN_DIR})
+install(FILES ${OVL_HTTPSERVICE_META} DESTINATION ${OVL_PLUGIN_DIR})

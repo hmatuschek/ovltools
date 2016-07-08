@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.8)
 project(ovltools)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake
-    ${CMAKE_INSTALL_PREFIX}/share/ovlnet)
+    ${CMAKE_INSTALL_PREFIX}/share/ovlnet/)
 include(InstallHeadersWithDirectory)
 
 find_package(Qt5Core REQUIRED)
@@ -53,8 +53,12 @@ ELSE(UNIX AND NOT APPLE)
  SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 ENDIF(UNIX AND NOT APPLE)
 
+SET(OVL_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/ovlnet")
+SET(OVL_PLUGIN_DIR "${OVL_INSTALL_DIR}/plugins")
+
 # application sources...
 add_subdirectory(src)
+add_subdirectory(plugins)
 
 # Source distribution packages:
 set(CPACK_PACKAGE_VERSION_MAJOR "1")

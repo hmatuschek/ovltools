@@ -1,7 +1,7 @@
 #include "halchat.hh"
 
-HalChat::HalChat(Node &dht, QHalModel &model, QObject *parent)
-  : QObject(parent), SecureSocket(dht), _model(model), _keepAlive(), _timeout()
+HalChat::HalChat(Network &net, QHalModel &model, QObject *parent)
+  : QObject(parent), SecureSocket(net), _model(model), _keepAlive(), _timeout()
 {
   // Setup "keep alive" timer
   _keepAlive.setInterval(5000);

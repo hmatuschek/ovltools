@@ -10,15 +10,6 @@
 #include <ovlnet/buckets.hh>
 
 
-class ServiceWhiteList : public QSet<Identifier>
-{
-public:
-  ServiceWhiteList(const QJsonArray &lst = QJsonArray());
-
-  QJsonArray toJson() const;
-};
-
-
 /** Implements a persistent settings object, collecting the options of several modules and
  * services and keep them in a single file. */
 class Settings : public QObject
@@ -29,10 +20,7 @@ public:
   /** Loads the settings from the given file (or initializes them with the default ones). */
   explicit Settings(const QString &filename, QObject *parent = 0);
 
-  /** Returns a weak reference to the socks service whitelist. */
-  ServiceWhiteList &socksServiceWhiteList();
-  /** Returns a weak reference to the shell service whitelist. */
-  ServiceWhiteList &shellServiceWhiteList();
+  const QStringList &plugins() const;
 
 public slots:
   /** Save the current settings into the file give to the constructor. */
@@ -41,10 +29,7 @@ public slots:
 protected:
   /** The settings file. */
   QFile _file;
-  /** Whitelist for the socks proxy service. */
-  ServiceWhiteList _socksServiceWhitelist;
-  /** Whitelist for the shell service. */
-  ServiceWhiteList _shellServiceWhitelist;
+  QStringList _plugins;
 };
 
 #endif // SETTINGS_H

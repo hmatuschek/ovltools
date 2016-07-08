@@ -1,7 +1,7 @@
 #include "echostream.hh"
 
-EchoStream::EchoStream(Node &dht)
-  : SecureSocket(dht)
+EchoStream::EchoStream(Network &net)
+  : SecureSocket(net)
 {
   // pass...
 }
