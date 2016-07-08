@@ -32,9 +32,12 @@ HttpStatusHandler::processRequest(HttpRequest *request) {
       " <tr><td>Bytes send</td> <td>%4</td></tr>"
       "</table>"
       "</body></html>";
-  return new HttpStringResponse(request->version(),
-        HTTP_OK, resp.arg(_dht.id().toBase32()).arg(_dht.numSockets()).arg(_dht.bytesReceived()).arg(_dht.bytesSend()),
-        request->socket(), "text/html");
+  return new HttpStringResponse(request->version(), HTTP_OK, resp
+                                .arg(_dht.id().toBase32())
+                                .arg(_dht.numSockets())
+                                .arg(_dht.bytesReceived())
+                                .arg(_dht.bytesSend()),
+                                request->socket(), "text/html");
 }
 
 
@@ -60,6 +63,7 @@ bool
 HttpServicePlugin::registerServices(Network &net) {
   _dispatcher = new HttpDispatcher();
   HttpService *service = new HttpService(net, _dispatcher);
+  _dispatcher->addHandler(new HttpStatusHandler(net.root()));
   net.registerService("http", service);
   return true;
 }

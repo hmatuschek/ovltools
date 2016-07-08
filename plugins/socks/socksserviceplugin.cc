@@ -20,12 +20,16 @@ SocksServicePlugin::~SocksServicePlugin() {
 
 void
 SocksServicePlugin::init(PluginLoader &loader) {
-  QString filename = loader.baseDirectory() +"/socksservice.conf.json";
-  QFile file(filename);
-  if (!file.open(QIODevice::ReadOnly))
+  _configFilename = loader.baseDirectory() +"/socksservice.conf.json";
+  QFile file(_configFilename);
+  if (! file.open(QIODevice::ReadOnly)) {
+    logInfo() << "Cannot open SocksService settings from "
+              << file.fileName() << ": " << file.errorString() << ".";
+    createWhitelist();
     return;
+  }
 
-  logDebug() << "SocksServiceSettings: Load settings from " << filename;
+  logDebug() << "SocksServiceSettings: Load settings from " << file.fileName();
   QJsonParseError err;
   QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &err);
   file.close();
@@ -51,6 +55,7 @@ SocksServicePlugin::init(PluginLoader &loader) {
     if (ident.isValid())
       _whitelist.insert(ident);
   }
+  logDebug() << "SocksService: Loaded white-list with " << _whitelist.size() << " entries.";
 }
 
 bool
@@ -67,6 +72,19 @@ SocksServicePlugin::unregisterServices() {
 bool
 SocksServicePlugin::isInWhitelist(const Identifier &id) const {
   return _whitelist.contains(id);
+}
+
+void
+SocksServicePlugin::createWhitelist() {
+  QJsonObject conf;
+  conf.insert("whitelist", QJsonArray());
+  QJsonDocument doc(conf);
+  QFile cfile(_configFilename);
+  if (! cfile.open(QIODevice::WriteOnly)) {
+    return;
+  }
+  cfile.write(doc.toJson());
+  cfile.close();
 }
 
 

@@ -40,6 +40,10 @@ public:
   bool isInWhitelist(const Identifier &id) const;
 
 protected:
+  void createWhitelist();
+
+protected:
+  QString _configFilename;
   QSet<Identifier> _whitelist;
 };
 
