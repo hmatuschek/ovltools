@@ -5,7 +5,7 @@
 #include <QFile>
 
 Daemon::Daemon(const QString &base_path, QObject *parent)
-  : QObject(parent), _settings(base_path+"/settings.json")
+  : QObject(parent), _settings(base_path+"/ovldaemon.conf.json")
 {
   logDebug() << "Start daemon from " << base_path << ".";
   // Try to load identity from file
