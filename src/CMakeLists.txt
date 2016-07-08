@@ -13,11 +13,11 @@ target_link_libraries(ovldaemon ${LIBS})
 INSTALL(TARGETS ovldaemon DESTINATION bin)
 
 # Install service script
-IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
-INSTALL(
-  FILES "${CMAKE_SOURCE_DIR}/shared/ovldaemon.conf"
-  DESTINATION "/etc/init")
-ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+#IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+#INSTALL(
+#  FILES "${CMAKE_SOURCE_DIR}/shared/ovldaemon.conf"
+#  DESTINATION "/etc/init")
+#ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 
 SET(OVL_GENID_SOURCES genid.cc)
