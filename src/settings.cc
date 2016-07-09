@@ -1,6 +1,7 @@
 #include "settings.hh"
 #include <ovlnet/logger.hh>
 #include <QJsonArray>
+#include <QHostInfo>
 
 
 /* ********************************************************************************************* *
@@ -35,6 +36,24 @@ Settings::Settings(const QString &filename, QObject *parent)
       _plugins.append(name);
     }
   }
+
+  // Get boot strap nodes
+  if (doc.object().contains("bootstrap") && doc.object().value("bootstrap").isArray()) {
+    QJsonArray bootstrap = doc.object().value("bootstrap").toArray();
+    foreach (QJsonValue peer, bootstrap) {
+      if ((! peer.isObject()) || !peer.toObject().contains("host"))
+        continue;
+      QString host = peer.toObject().value("host").toString();
+      uint16_t port = 7741;
+      if (peer.toObject().contains("port"))
+        port = peer.toObject().value("port").toInt(7741);
+      // resolve hostname
+      QHostInfo info = QHostInfo::fromName(host);
+      foreach (QHostAddress addr, info.addresses()) {
+        _bootstrap.append(PeerItem(addr, port));
+      }
+    }
+  }
 }
 
 void
@@ -46,11 +65,22 @@ Settings::save() {
   }
 
   QJsonObject obj;
+
   QJsonArray plugins;
   foreach(QString plugin, _plugins) {
     plugins.append(plugin);
   }
   obj.insert("plugins", plugins);
+
+  QJsonArray bootstrap;
+  foreach(PeerItem peer, _bootstrap) {
+    QJsonObject host;
+    host.insert("addr", peer.addr().toString());
+    host.insert("port", peer.port());
+    bootstrap.append(host);
+  }
+  obj.insert("boostrap", bootstrap);
+
   QJsonDocument doc(obj);
   _file.write(doc.toJson());
   _file.close();
@@ -59,4 +89,9 @@ Settings::save() {
 const QStringList &
 Settings::plugins() const {
   return _plugins;
+}
+
+const QList<PeerItem>
+Settings::bootstrap() const {
+  return _bootstrap;
 }

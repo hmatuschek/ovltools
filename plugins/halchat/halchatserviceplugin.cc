@@ -16,20 +16,20 @@ HalChatService::newSocket() {
 
 bool
 HalChatService::allowConnection(const NodeItem &peer) {
-  logDebug() << "ChatService: Allow connection to " << peer.id()
+  logDebug() << "ChatService: Allow connection from " << peer.id()
              << " @" << peer.addr() << ".";
   return true;
 }
 
 void
 HalChatService::connectionStarted(SecureSocket *stream) {
-  logDebug() << "ChatService: Connection to " << stream->peerId() << " started.";
+  logDebug() << "ChatService: Connection from " << stream->peerId() << " started.";
   static_cast<HalChat *>(stream)->started();
 }
 
 void
 HalChatService::connectionFailed(SecureSocket *stream) {
-  logDebug() << "ChatService: Connection to " << stream->peerId() << " failed.";
+  logDebug() << "ChatService: Connection from " << stream->peerId() << " failed.";
   delete stream;
 }
 

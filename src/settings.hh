@@ -21,6 +21,7 @@ public:
   explicit Settings(const QString &filename, QObject *parent = 0);
 
   const QStringList &plugins() const;
+  const QList<PeerItem> bootstrap() const;
 
 public slots:
   /** Save the current settings into the file give to the constructor. */
@@ -30,6 +31,7 @@ protected:
   /** The settings file. */
   QFile _file;
   QStringList _plugins;
+  QList<PeerItem> _bootstrap;
 };
 
 #endif // SETTINGS_H
