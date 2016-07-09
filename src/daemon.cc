@@ -33,6 +33,11 @@ Daemon::Daemon(const QString &base_path, QObject *parent)
     logDebug() << "Loaded plugin '" << name << "...";
   }
 
+  // Bootstrap
+  foreach (PeerItem peer, _settings.bootstrap()) {
+    logDebug() << "Bootstrap from " << peer.addr() << ":" << peer.port() << "...";
+    _dht->ping(peer);
+  }
 }
 
 Node &
