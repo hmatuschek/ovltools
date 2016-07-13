@@ -8,7 +8,7 @@
  * Implementation of Settings
  * ********************************************************************************************* */
 Settings::Settings(const QString &filename, QObject *parent)
-  : QObject(parent), _file(filename)
+  : QObject(parent), _file(filename), _rendezvousPing(false)
 {
   if (!_file.open(QIODevice::ReadOnly)) { return; }
   logDebug() << "Settings: Load settings from " << filename;
@@ -54,6 +54,10 @@ Settings::Settings(const QString &filename, QObject *parent)
       }
     }
   }
+
+  // Check if rendezvous ping is enabled
+  if (doc.object().contains("rendezvousPing") && doc.object().value("rendezvousPing").isBool())
+    _rendezvousPing = doc.object().value("rendezvousPing").toBool(false);
 }
 
 void
@@ -81,6 +85,8 @@ Settings::save() {
   }
   obj.insert("boostrap", bootstrap);
 
+  obj.insert("rendezvousPing", _rendezvousPing);
+
   QJsonDocument doc(obj);
   _file.write(doc.toJson());
   _file.close();
@@ -94,4 +100,9 @@ Settings::plugins() const {
 const QList<PeerItem>
 Settings::bootstrap() const {
   return _bootstrap;
+}
+
+bool
+Settings::rendezvousPing() const {
+  return _rendezvousPing;
 }

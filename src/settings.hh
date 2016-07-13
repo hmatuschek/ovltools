@@ -22,6 +22,7 @@ public:
 
   const QStringList &plugins() const;
   const QList<PeerItem> bootstrap() const;
+  bool rendezvousPing() const;
 
 public slots:
   /** Save the current settings into the file give to the constructor. */
@@ -32,6 +33,7 @@ protected:
   QFile _file;
   QStringList _plugins;
   QList<PeerItem> _bootstrap;
+  bool _rendezvousPing;
 };
 
 #endif // SETTINGS_H

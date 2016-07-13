@@ -16,6 +16,8 @@ Daemon::Daemon(const QString &base_path, QObject *parent)
   }
 
   _dht = new Node(ovlDir.canonicalPath()+"/identity.pem");
+  // Enable rendevous ping if set.
+  _dht->enableRendezvousPing(_settings.rendezvousPing());
 
   // PluginLoader
   _plugins = new PluginLoader(*_dht, base_path+"/plugins/", this);
