@@ -1,4 +1,5 @@
 #include "echocallserviceplugin.hh"
+#include <netinet/in.h>
 
 /* ********************************************************************************************* *
  * Implementation of EchoCall
