@@ -17,6 +17,7 @@ EchoCall::handleDatagram(const uint8_t *data, size_t len) {
 
 void
 EchoCall::startCall() {
+  logDebug() << "Call started, send empty message to start...";
   uint32_t frameNumber = htonl(0);
   sendDatagram((uint8_t *)&frameNumber, sizeof(uint32_t));
 }
