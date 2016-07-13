@@ -15,12 +15,10 @@ EchoCall::handleDatagram(const uint8_t *data, size_t len) {
   this->sendDatagram(data, len);
 }
 
-bool
-EchoCall::start(const Identifier &streamId, const PeerItem &peer) {
-  if (! SecureSocket::start(streamId, peer))
-    return false;
+void
+EchoCall::startCall() {
   uint32_t frameNumber = htonl(0);
-  return sendDatagram((uint8_t *)&frameNumber, sizeof(uint32_t));
+  sendDatagram((uint8_t *)&frameNumber, sizeof(uint32_t));
 }
 
 
@@ -48,7 +46,7 @@ EchoCallService::allowConnection(const NodeItem &peer) {
 void
 EchoCallService::connectionStarted(SecureSocket *stream) {
   logDebug() << "EchoCallService: Connection from " << stream->peerId() << " started.";
-  // pass...
+  dynamic_cast<EchoCall *>(stream)->startCall();
 }
 
 void

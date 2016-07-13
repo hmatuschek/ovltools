@@ -10,7 +10,8 @@ public:
   EchoCall(Network &net);
 
   void handleDatagram(const uint8_t *data, size_t len);
-  bool start(const Identifier &streamId, const PeerItem &peer);
+  void startCall();
+
 };
 
 
