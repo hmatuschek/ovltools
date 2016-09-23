@@ -2,7 +2,7 @@
 #define __OVLNET_DAEMON_HTTP_STATUS_H__
 
 #include <ovlnet/httpservice.hh>
-#include <ovlnet/plugin.hh>
+#include "plugin.hh"
 
 class HttpStatusHandler: public HttpRequestHandler
 {

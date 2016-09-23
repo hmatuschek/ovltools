@@ -1,7 +1,7 @@
 #ifndef HALCHATSERVICEPLUGIN_HH
 #define HALCHATSERVICEPLUGIN_HH
 
-#include <ovlnet/plugin.hh>
+#include "plugin.hh"
 #include "halchat.hh"
 
 

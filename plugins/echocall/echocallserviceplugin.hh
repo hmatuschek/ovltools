@@ -1,7 +1,7 @@
 #ifndef ECHOCALLSERVICEPLUGIN_HH
 #define ECHOCALLSERVICEPLUGIN_HH
 
-#include <ovlnet/plugin.hh>
+#include "plugin.hh"
 
 
 class EchoCall: public SecureSocket
